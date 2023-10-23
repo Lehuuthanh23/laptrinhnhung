@@ -65,6 +65,8 @@ void loop() {
       isPressed9=false;
   }
   }
+    if(mode_baochay!=1){
+
   switch(mode_phongkhach){
     case 1:
         digitalWrite(led02,1);
@@ -80,6 +82,7 @@ void loop() {
     digitalWrite(led02,0);
       break;
   }
+    }
 //Phòng ngủ
 
   if(digitalRead(btn7)==1){
@@ -96,6 +99,8 @@ void loop() {
       isPressed7=false;
   }
   }
+    if(mode_baochay!=1){
+
   switch(mode_phongngu){
     case 1:
         digitalWrite(led04,1);
@@ -112,6 +117,7 @@ void loop() {
       break;   
 
   }
+    }
 
   //Phòng bếp
   if(digitalRead(btn6)==HIGH){
@@ -122,16 +128,18 @@ void loop() {
       mode_phongbep=(mode_phongbep==2?mode_phongbep=1:mode_phongbep+1);
       isPressed6=false;
     }
-    switch(mode_phongbep){
-      case 1:
-        digitalWrite(led03,HIGH);
-      break;
+      if(mode_baochay!=1){
+        switch(mode_phongbep){
+          case 1:
+            digitalWrite(led03,HIGH);
+          break;
 
-      case 2:
-          digitalWrite(led03,LOW);
-      break;
+          case 2:
+              digitalWrite(led03,LOW);
+          break;
+      }
+    }
   }
-}
 
   //Phòng WC
     if(digitalRead(btn8)==HIGH){
@@ -141,8 +149,8 @@ void loop() {
      if(isPressed8)
       mode_phongwc=(mode_phongwc==2?mode_phongwc=1:mode_phongwc+1);
       isPressed8=false;
-    
   }
+  if(mode_baochay!=1){
     switch(mode_phongwc){
       case 1:
         digitalWrite(led05,HIGH);
@@ -150,22 +158,25 @@ void loop() {
       case 2:
           digitalWrite(led05,LOW);
       break; 
+    }
 }
  
   //Nút tắt hết đèn khi ra khỏi nhà
-  // if(digitalRead(btn3)==1){
-  //     isPressed3=true;
-  // }
-  // else{
-  //   if(isPressed3){
-  //     digitalWrite(led01,0);
-  //     digitalWrite(led02,0);
-  //     digitalWrite(led03,0);
-  //     digitalWrite(led04,0);
-  //     digitalWrite(led05,0);
-  //   }
-  //   isPressed3=false;
-  // }
+  if(digitalRead(btn3)==1){
+      isPressed3=true;
+  }
+  else{
+      if(mode_baochay!=1){
+        if(isPressed3){
+          digitalWrite(led01,0);
+          digitalWrite(led02,0);
+          digitalWrite(led03,0);
+          digitalWrite(led04,0);
+          digitalWrite(led05,0);
+        }
+        isPressed3=false;
+      }
+  }
   //Nút báo cháy
     if(digitalRead(btn5)==HIGH){
     isPressed5=true;
@@ -182,17 +193,17 @@ void loop() {
     switch(mode_baochay){
       case 1:
           if(millis()-t_preAll>=500){
-              digitalWrite(led01,0);
-              digitalWrite(led02,1);
-              digitalWrite(led03,1);
-              digitalWrite(led04,1);
-              digitalWrite(led05,1);
+              digitalWrite(led01,stt_all);
+              digitalWrite(led02,stt_all);
+              digitalWrite(led03,stt_all);
+              digitalWrite(led04,stt_all);
+              digitalWrite(led05,stt_all);
         stt_all=!stt_all;
         t_preAll=millis();
       }
       break;
       case 2:
-              digitalWrite(led01,1);
+              digitalWrite(led01,0);
               digitalWrite(led02,0);
               digitalWrite(led03,0);
               digitalWrite(led04,0);
